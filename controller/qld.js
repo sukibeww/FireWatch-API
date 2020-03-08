@@ -3,7 +3,6 @@ const parseString = require("xml2js").parseString;
 
 const processRegion = async (item) => {
   const date = item.pubDate[0];
-  console.log(date);
   const sections = item.description[0].split('\n');
   sections.pop();
   const regex = RegExp('no');
@@ -18,7 +17,8 @@ const processRegion = async (item) => {
       date
     }
   })
-  return result
+  const QLD = {QLD: result};
+  return QLD;
 }
 
 exports.getQLD = async (req, res, next) => {
