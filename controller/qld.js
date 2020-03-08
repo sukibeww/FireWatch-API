@@ -35,3 +35,22 @@ exports.getQLD = async (req, res, next) => {
       });
     });
 };
+
+exports.rootQLD = async (req, res, next) => {
+  let qld;
+  await axios
+    .get("https://www.ruralfire.qld.gov.au/BushFire_Safety/Neighbourhood-Safer-Places/lgas/_layouts/15/listfeed.aspx?List=a4f237e1-b263-4062-a8e2-82774f87f01d&View=a0a7270f-6252-422c-96f2-d7088ae16ffe")
+    .then(async response => {
+      const xml = response.data;
+      await parseString(xml, async (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          // const results = await processRegion(result.rss.channel[0].item[0]);
+          // console.log(results);
+          qld = await processRegion(result.rss.channel[0].item[0]);
+        }
+      });
+    });
+  return qld;
+};

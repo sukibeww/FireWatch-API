@@ -15,7 +15,6 @@ const processContent = async (regions, date ) => {
     }
   })
   const nsw = {NSW: result};
-  console.log(nsw);
   return nsw;
 };
 
@@ -35,3 +34,25 @@ exports.getNSW = async (req, res, next) => {
       });
     });
 };
+
+exports.rootNSW = async (req, res, next) => {
+  let nsw;
+  await axios
+    .get("http://www.rfs.nsw.gov.au/feeds/fdrToban.xml")
+    .then(async response => {
+      const date = response.headers["last-modified"]
+      const xml = response.data;
+      await parseString(xml, async (err, result) => {
+        const regions = result.FireDangerMap.District
+        if (err) {
+          console.log(err);
+        } else {
+          // const result = await processContent(regions, date);
+          // console.log(result);
+          nsw = await processContent(regions, date);
+        }
+      });
+    });
+  return nsw;
+};
+

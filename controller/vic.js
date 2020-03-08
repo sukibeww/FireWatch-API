@@ -47,3 +47,22 @@ exports.getVIC = async (req, res, next) => {
       });
     });
 };
+
+exports.rootVIC = async (req, res, next) => {
+  let vic;
+  await axios
+    .get("https://data.emergency.vic.gov.au/Show?pageId=getFDRTFBRSS")
+    .then(async response => {
+      const xml = response.data;
+      await parseString(xml, async (err, result) => {
+        const date = result.rss.channel[0].pubDate[0];
+        const firebanInfo = result.rss.channel[0].item[0].description[0];
+        if (err) {
+          console.log(err);
+        } else {
+          vic = await processContent(firebanInfo, date);
+        }
+      });
+    });
+  return vic;
+};
