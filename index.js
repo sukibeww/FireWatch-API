@@ -12,6 +12,7 @@ app.use(morgan('dev'))
 
 //routes
 app.use(require('./router/vic'))
+app.use(require('./router/nsw'))
 
 
 app.listen(5000, () => {
