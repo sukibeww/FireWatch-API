@@ -14,6 +14,7 @@ app.use(morgan('dev'))
 app.use(require('./router/vic'))
 app.use(require('./router/nsw'))
 app.use(require('./router/qld'))
+app.use(require('./router/south'))
 app.use(require('./router/root'))
 
 
