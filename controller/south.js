@@ -10,7 +10,7 @@ const processContent = async ( report ) => {
     const fireRating = description[3].split(".")[0].trim();
     return({regionName, fireBan, fireRating, date });
   })
-  return {SouthernAustralia: result};
+  return {SouthAustralia: result};
 };
 
 exports.getSouth = async (req, res, next) => {
